@@ -15,7 +15,7 @@ Keys for input:
 None. For GUI it uses Tkinter. But you need atleast Python 3.6
 <hr>
 
-##Simple Example
+## Simple Example
 
 ```py
 import asyncio
