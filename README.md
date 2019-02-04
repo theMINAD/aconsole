@@ -1,8 +1,9 @@
 # aconsole
 
 Asynchorous Commandline like GUI for Python3. Uses asyncio and async await.
-Controls
+<hr>
 
+## Controls
 Mouse for navigating the output.
 Keys for input:
 
@@ -11,13 +12,11 @@ Keys for input:
 <hr>
 
 ## Depencies
-
-None. For GUI it uses Tkinter. But you need atleast Python 3.6<br>
-Works on Mac, Linux and Windows
+Just Python 3.6 or above. For GUI it uses Tkinter, which is built-in module in Python.<br>
+Tested on: Mac, Linux and Windows.
 <hr>
 
 ## An Simple Example
-
 ```py
 import asyncio
 import aconsole
