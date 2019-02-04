@@ -1,2 +1,2 @@
 # aconsole
-Asynchorous Commandline like GUI for Python3. Uses async await and asyncio.
+Asynchorous Commandline like GUI for Python3. Uses asyncio and async await.
