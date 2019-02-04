@@ -1,6 +1,9 @@
 # aconsole
 
 Asynchorous Commandline like GUI for Python3. Uses asyncio and async await.
+
+Supports async await for print and input. It supports having many awaiting inputs, which are then processed one by one.
+See: [Multiple inputs awaiting](https://github.com/theMINAD/aconsole/blob/master/examples/multi.py)
 <hr>
 
 ## Controls
@@ -56,3 +59,4 @@ if __name__ == '__main__':
  * [Simple Math Game](https://github.com/theMINAD/aconsole/blob/master/examples/game.py)
  * [Simple asking program](https://github.com/theMINAD/aconsole/blob/master/examples/asking.py)
  * [Simple asking program using sql](https://github.com/theMINAD/aconsole/blob/master/examples/asking_sql.py)
+ * [Multiple inputs awaiting](https://github.com/theMINAD/aconsole/blob/master/examples/multi.py)
