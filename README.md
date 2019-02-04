@@ -15,7 +15,7 @@ Keys for input:
 None. For GUI it uses Tkinter. But you need atleast Python 3.6
 <hr>
 
-## Simple Example
+## An Simple Example
 
 ```py
 import asyncio
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 ![image](https://raw.githubusercontent.com/theMINAD/aconsole/master/examples/images/echo.gif)
 <hr>
 
-## Other Example
+## Other Examples
  * [Async Chat Client](https://github.com/theMINAD/aconsole/blob/master/examples/chat_client.py)
  * [Async Chat Server](https://github.com/theMINAD/aconsole/blob/master/examples/chat_server.py)
  * [Simple Math Game](https://github.com/theMINAD/aconsole/blob/master/examples/game.py)
