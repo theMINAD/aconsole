@@ -2,8 +2,12 @@
 
 Asynchorous Commandline like GUI for Python3. Uses asyncio and async await.
 
-Supports async await for print and input. It supports having many awaiting inputs, which are then processed one by one.
-See: [Multiple inputs awaiting](https://github.com/theMINAD/aconsole/blob/master/examples/multi.py)
+Provides async await for print and input. It also supports having many awaiting inputs, which are queued and then processed one by one.
+See: [Multiple inputs awaiting](https://github.com/theMINAD/aconsole/blob/master/examples/multi.py).<br>
+
+Other supported features:
+ * Canceling input.
+ * Color theme changing
 <hr>
 
 ## Controls
