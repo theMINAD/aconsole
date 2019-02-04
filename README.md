@@ -12,7 +12,8 @@ Keys for input:
 
 ## Depencies
 
-None. For GUI it uses Tkinter. But you need atleast Python 3.6
+None. For GUI it uses Tkinter. But you need atleast Python 3.6<br>
+Works on Mac, Linux and Windows
 <hr>
 
 ## An Simple Example
