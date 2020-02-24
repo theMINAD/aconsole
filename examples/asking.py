@@ -1,12 +1,9 @@
 import aconsole
 import asyncio
 
+console = aconsole.AsyncConsole()
 
-async def main():
-    console = aconsole.AsyncConsole()
-    loop = asyncio._get_running_loop()
-
-    loop.create_task(console.mainloop())
+async def main():    
     while True:
         name = await console.input("What is your name: ")
         age = 0
@@ -15,16 +12,18 @@ async def main():
             try:
                 age = int((await console.input("What is your age: ")))
                 break
+            except asyncio.CancelledError:
+                break
             except:
-                console.set_foreground('red')
+                console.set_colors('black', 'red')
                 await asyncio.sleep(1)
-                console.set_foreground('green')
+                console.set_colors('black', 'green')
 
-        await console.print("Name: {%s}, Age:  {%s}"%(name, age))
-        await console.print("---------------------------------")
+        console.print("Name: {%s}, Age:  {%s}"%(name, age))
+        console.print("---------------------------------")
         await asyncio.sleep(1)
-
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
+    run_task = console.run()
     loop.run_until_complete(main())
