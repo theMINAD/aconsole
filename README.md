@@ -1,57 +1,56 @@
 # aconsole
 
-Asynchorous Commandline like GUI for Python3. Uses asyncio and async await.
+Asynchorous Commandline like GUI for Python 3.
 
-Provides async await for print and input. It also supports having many awaiting inputs, which are queued and then processed one by one.
+Provides async await for print and input. It also supports having multiple awaiting inputs, which are queued and then processed one by one.
+
+You can now get this lib from pip: https://pypi.org/project/aconsole/0.0.3/
+
 See: [Multiple inputs awaiting](https://github.com/theMINAD/aconsole/blob/master/examples/multi.py).<br>
 
 Other supported features:
  * Canceling input.
- * Color theme changing
+ * Changing color theme
+ * Chaging transparency
 <hr>
 
 ## Controls
 Mouse for navigating the output.
 Keys for input:
 
-    [Enter] submits input
-    [Up/Down] navigates input history
+    [Enter] Submits input.
+    [Up/Down] Navigates input history.
+
+Keys for output:
+
+    [Ctrl+C] Copy selected content.
+    [Ctrl+R] Clears output.
 <hr>
 
 ## Depencies
-Just Python 3.6 or above. For GUI it uses Tkinter, which is built-in module in Python.<br>
+Just Python 3.5 or above. For GUI it uses Tkinter, which is built-in module in Python.<br>
 Tested on: Mac, Linux and Windows.
 <hr>
 
-## An Simple Example
+## A Simple Example
 ```py
 import asyncio
 import aconsole
 
-
-async def main():
-    loop = asyncio.get_event_loop()
-    console = aconsole.AsyncConsole()
-
-    loop.create_task(console.mainloop()) #Updates the GUI
-    while True:
-        while True:
-            i = await console.input("echo to out: ")
-            if i:
-                break #None or empty string, we wont print that.
-            
-        await console.print("echo: %s"%i)
-        #Lets sleep for half a second, so we see how console's input looks when there is no on going inputs.
-        await asyncio.sleep(0.5) 
-        
-        #Console's input will be disabled and empty if there is no inputs requested.
-        #There can be multiple awaiting inputs, they will be queued and processed in order.
-        #You also can cancel on going input using console.cancel_input().
-
-
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    
+    console = AsyncConsole()
+    console.title('echo test')
+
+    async def echo():
+        while True:
+            result = await console.input('echo to out: ')
+            console.print('echo:', result)
+
+    run_task = console.run(loop)
+    loop.create_task(echo())
+    loop.run_until_complete(run_task) # wait until window closed
 ```
 
 ![image](https://raw.githubusercontent.com/theMINAD/aconsole/master/examples/images/echo.gif)
