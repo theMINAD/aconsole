@@ -28,8 +28,8 @@ def fetch_users():
         name = table[0]
         age = table[1]
 
-        CMD.print_no_wait("Name: {%s}, Age:  {%s}"%(name, age))
-        CMD.print_no_wait("---------------------------------")
+        CMD.print("Name: {%s}, Age:  {%s}"%(name, age))
+        CMD.print("---------------------------------")
 
     cursor.close()
 
@@ -45,9 +45,9 @@ async def main():
                 age = int((await CMD.input("What is your age: ")))
                 break
             except:
-                CMD.set_foreground('red')
+                CMD.set_colors('black', 'red')
                 await asyncio.sleep(1)
-                CMD.set_foreground('green')
+                CMD.set_colors('black', 'green')
 
         insert_user(name, age)
         
@@ -56,10 +56,12 @@ async def main():
 
         await asyncio.sleep(2)
 
-loop = asyncio.get_event_loop()
+if __name__ == '__main__':
+    init_db()
 
-t1 = loop.create_task(CMD.mainloop())
-t2 = loop.create_task(main())
+    loop = asyncio.get_event_loop()
 
-init_db()
-loop.run_until_complete(asyncio.gather(t1, t2))
+    run_task = CMD.run()
+    loop.create_task(main())
+
+    loop.run_until_complete(run_task)
