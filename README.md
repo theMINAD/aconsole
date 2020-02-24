@@ -1,10 +1,9 @@
 # aconsole
 
 Asynchorous Commandline like GUI for Python 3.
+You can now get this lib from pip: https://pypi.org/project/aconsole/0.0.3/
 
 Provides async await for print and input. It also supports having multiple awaiting inputs, which are queued and then processed one by one.
-
-You can now get this lib from pip: https://pypi.org/project/aconsole/0.0.3/
 
 See: [Multiple inputs awaiting](https://github.com/theMINAD/aconsole/blob/master/examples/multi.py).<br>
 
