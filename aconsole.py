@@ -87,7 +87,7 @@ class AsyncConsole(tkinter.Tk):
                 self.clipboard_clear()  
                 self.clipboard_append(text)  
             elif (key.state == 4 or key.state == 6) and key.keysym.lower() == 'r':
-                self.__output_text.delete('1.0', tkinter.END)
+                self.clear_output()
         except tkinter.TclError:
             pass
         
@@ -152,7 +152,7 @@ class AsyncConsole(tkinter.Tk):
             if self.__input_future.done():
                 self.__input_queue.task_done()
                 continue
-            
+
             self.__input_enable(prompt)
 
             with suppress(asyncio.CancelledError):
@@ -179,6 +179,9 @@ class AsyncConsole(tkinter.Tk):
         print_str = sep.join(str(x) for x in args) + end
         self.__output_text.insert(tkinter.END, print_str)
         self.__output_text.see(tkinter.END)
+
+    def clear_output(self):
+        self.__output_text.delete('1.0', tkinter.END)
 
     def cancel_input(self):
         if self.__input_future and not self.__input_future.done():
