@@ -3,8 +3,8 @@ import aconsole
 import json
 
 
-loop = None
-console = None
+loop = asyncio.get_event_loop()
+console = aconsole.AsyncConsole()
 
 
 class ChatServer(object):
@@ -40,7 +40,7 @@ class ChatServer(object):
                         packet = buffer[:index]
                         packet_json = json.loads(packet)
 
-                        #await console.print(packet_json)
+                        #console.print(packet_json)
 
                         if packet_json['cmd'] == 'message':
                             message_json = {'cmd': 'message', 'sender': username, 'message': packet_json['message']}
@@ -58,7 +58,7 @@ class ChatServer(object):
 
                         del buffer[:index+1] #remove length + \x00
             except Exception as ex:
-                await console.print(f'{username} has left the server. {ex}')
+                console.print(f'{username} has left the server. {ex}')
 
                 message_json = {'cmd': 'message', 'sender': 'SERVER', 'message': f'{username} has left the server. {ex}'}
                 message_json_bytes = json.dumps(message_json).encode()
@@ -85,18 +85,19 @@ class ChatServer(object):
             message = await console.input('Broadcast: ')
             message_json = {'cmd': 'message', 'sender': 'SERVER', 'message': message}
             message_json_bytes = json.dumps(message_json).encode()
+            message_sent_count = 0
 
             for client in self.clients:
                 client.write(message_json_bytes)
                 client.write(b'\x00')
+                message_sent_count += 1
+
+            console.print('Sent', message_sent_count, 'messages.')
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    console = aconsole.AsyncConsole()
+    run_task = console.run()
 
     server = ChatServer('0.0.0.0', 8888)
+    loop.create_task(server.serve_forever())
 
-    task1 = loop.create_task(console.mainloop())
-    task2 = loop.create_task(server.serve_forever())
-
-    loop.run_until_complete(asyncio.gather(task1, task2))
+    loop.run_until_complete(run_task)
