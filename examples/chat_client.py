@@ -3,8 +3,8 @@ import aconsole
 import json
 
 
-loop = None
-console = None
+loop = asyncio.get_event_loop()
+console = aconsole.AsyncConsole()
 
 
 class ChatClient(object):
@@ -40,11 +40,11 @@ class ChatClient(object):
                     packet_json = json.loads(packet)
 
                     if packet_json['cmd'] == 'message':
-                        await console.print(f'[{packet_json["sender"]}]: {packet_json["message"]}')
+                        console.print(f'[{packet_json["sender"]}]: {packet_json["message"]}')
 
                     del buffer[:index+1] #remove length + \x00
         except Exception as ex:
-            await console.print(f'ERROR: {ex}')
+            console.print(f'ERROR: {ex}')
         finally:
             self.writer.close()
 
@@ -80,12 +80,6 @@ class ChatClient(object):
                 self.writer.write(b'\x00')
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    console = aconsole.AsyncConsole()
-
-    server = ChatClient('127.0.0.1', 8888)
-
-    task1 = loop.create_task(console.mainloop())
-    task2 = loop.create_task(server.wait_close())
-
-    loop.run_until_complete(asyncio.gather(task1, task2))
+    run_task = console.run()
+    ChatClient('127.0.0.1', 8888)
+    loop.run_until_complete(run_task)
