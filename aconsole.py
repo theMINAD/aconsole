@@ -57,6 +57,7 @@ class AsyncConsole(tkinter.Tk):
         self.__output_frame.pack(fill=tkinter.BOTH, expand=tkinter.YES)
         self.__output_scroll.pack(fill=tkinter.Y, side=tkinter.RIGHT)
         self.__output_text.pack(fill=tkinter.BOTH, expand=tkinter.YES)
+        self.__output_str = ''
 
         self.__input_frame.config(bd=2, highlightthickness=0)
 
@@ -170,15 +171,20 @@ class AsyncConsole(tkinter.Tk):
 
         future = asyncio.Future()
         self.__input_queue.put_nowait((future, prompt))
+        
         return future
 
     def print(self, *args, sep=' ', end='\n'):
         if self.__destroyed or not self.__running:
             raise RuntimeError('console closed')
 
-        print_str = sep.join(str(x) for x in args) + end
-        self.__output_text.insert(tkinter.END, print_str)
-        self.__output_text.see(tkinter.END)
+        self.__output_str = f'{self.__output_str}{sep.join(str(x) for x in args)}{end}'
+
+    def __process_output(self):                
+        if len(self.__output_str) > 0:
+            self.__output_text.insert(tkinter.END, self.__output_str)
+            self.__output_text.see(tkinter.END)
+            self.__output_str = ''
 
     def clear_output(self):
         self.__output_text.delete('1.0', tkinter.END)
@@ -222,6 +228,7 @@ class AsyncConsole(tkinter.Tk):
             self.__running = True
 
             while True:
+                self.__process_output()
                 self.update()
                 self.update_idletasks()
                 await asyncio.sleep(0.01)
